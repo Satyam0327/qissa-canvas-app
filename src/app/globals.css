@@ -472,6 +472,7 @@ body::before {
   position: relative;
   min-height: 300vh;
   overflow: visible;
+  z-index: 1;
 }
 
 .scroll-pin-container {
@@ -1700,13 +1701,16 @@ body::before {
     font-size: clamp(1.8rem, 8vw, 2.5rem) !important;
   }
 }
+
 /* -- Comic Style / Sliding Doors Elements -- */
 .comic-section {
   position: relative;
-  min-height: 150vh; /* space for scrolling */
+  min-height: 150vh;
+  /* space for scrolling */
   background: var(--bg-primary);
   overflow: hidden;
   padding-bottom: 5rem;
+  z-index: 2;
 }
 
 .halftone-bg {
@@ -1771,7 +1775,8 @@ body::before {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: contrast(1.2) saturate(1.2); /* comic punch */
+  filter: contrast(1.2) saturate(1.2);
+  /* comic punch */
 }
 
 .comic-panel-caption {
@@ -1817,10 +1822,12 @@ body::before {
     width: 90%;
     height: 45vh;
   }
+
   .comic-panel-left {
     top: 5%;
     left: 5%;
   }
+
   .comic-panel-right {
     top: 52%;
     right: 5%;

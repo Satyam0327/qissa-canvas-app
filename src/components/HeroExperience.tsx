@@ -58,41 +58,38 @@ export default function HeroExperience() {
                 ScrollTrigger.create({
                     trigger: scrollSectionRef.current,
                     start: "top top",
-                    end: "+=250%", // Keep it pinned for 2.5x the screen height
+                    end: "+=250%",
                     pin: ".scroll-pin-wrapper",
                     pinSpacing: true,
                 });
 
-                // Text lines fade in and out sequentially
-                const textLines = gsap.utils.toArray(".scroll-text-line");
-                textLines.forEach((line: any, i: number) => {
-                    gsap.fromTo(line,
-                        { opacity: 0, y: 50 },
-                        {
-                            opacity: 1,
-                            y: 0,
-                            duration: 1,
-                            scrollTrigger: {
-                                trigger: scrollSectionRef.current,
-                                start: `${(i * 20)}% center`,
-                                end: `${(i * 20) + 15}% center`,
-                                scrub: 1,
-                                toggleActions: "play reverse play reverse", // fades back out if you scroll past
-                            }
-                        }
+                // Sequential text reveal — single timeline synced to the same scroll range
+                const textLines = gsap.utils.toArray(".scroll-text-line") as HTMLElement[];
+                const tlText = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: scrollSectionRef.current,
+                        start: "top top",
+                        end: "+=250%",
+                        scrub: 1,
+                    }
+                });
+
+                textLines.forEach((line, i) => {
+                    const isLast = i === textLines.length - 1;
+
+                    // Fade in + slide up
+                    tlText.fromTo(line,
+                        { opacity: 0, y: 60 },
+                        { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
                     );
 
-                    // Fade out the previous line if it's not the last one
-                    gsap.to(line, {
-                        opacity: 0,
-                        y: -50,
-                        scrollTrigger: {
-                            trigger: scrollSectionRef.current,
-                            start: `${(i * 20) + 20}% center`,
-                            end: `${(i * 20) + 30}% center`,
-                            scrub: 1,
-                        }
-                    });
+                    // Hold visible for a moment
+                    tlText.to(line, { opacity: 1, duration: 0.5 });
+
+                    // Fade out (skip for the last word so it stays visible)
+                    if (!isLast) {
+                        tlText.to(line, { opacity: 0, y: -40, duration: 0.8, ease: "power2.in" });
+                    }
                 });
 
                 // 4. Differential Parallax Columns (Dulcedo Portfolio grid feel)
