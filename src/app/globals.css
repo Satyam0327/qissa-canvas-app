@@ -391,8 +391,6 @@ body::before {
 
 .hero-title {
   margin-bottom: 1.5rem;
-  opacity: 0;
-  transform: translateY(30px);
 }
 
 .hero-title .line {
@@ -860,6 +858,7 @@ body::before {
 .cl-userButtonBox {
   transform: scale(1.1);
 }
+
 /* -- E-Commerce & Cart UI -- */
 .cart-backdrop {
   position: fixed;
@@ -1264,7 +1263,7 @@ body::before {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  
+
   .poster-info-col {
     padding-top: 0;
   }
@@ -1272,19 +1271,37 @@ body::before {
 
 /* Animations */
 @keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes popIn {
-  0% { transform: scale(0); }
-  70% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0);
+  }
+
+  70% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* -- Checkout Page UI -- */
@@ -1422,14 +1439,16 @@ body::before {
 .spinner-small {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255,255,255,0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-top-color: var(--text-primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .summary-card {
@@ -1588,4 +1607,62 @@ body::before {
   .summary-card {
     position: static;
   }
+}
+
+/* -- Dulcedo-Style Extreme Parallax Elements -- */
+.hero-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.hero-main-bg {
+  width: 100%;
+  height: 120%;
+  /* Extra height for parallax */
+  object-fit: cover;
+  position: absolute;
+  top: -10%;
+  left: 0;
+  opacity: 0.6;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--bg-primary) 0%, transparent 60%, rgba(5, 5, 7, 0.4) 100%);
+  z-index: 1;
+}
+
+.parallax-poster-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 5;
+}
+
+.parallax-poster-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Offset columns for masonry feel */
+.parallax-poster-col:nth-child(even) {
+  margin-top: 10vh;
+}
+
+/* -- Gallery Depth -- */
+.depth-item {
+  transform-style: preserve-3d;
+  will-change: transform;
 }

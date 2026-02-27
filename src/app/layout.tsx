@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { CartProvider } from "@/components/CartContext";
 import CartDrawer from "@/components/CartDrawer";
+import LenisProvider from "@/components/LenisProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {

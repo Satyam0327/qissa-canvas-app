@@ -2,6 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface PosterItem {
     id: number;
@@ -120,6 +124,37 @@ export default function InfiniteCanvas() {
         return () => observer.disconnect();
     }, [loadMore]);
 
+    // Apply Parallax effect to new items
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            const items = gsap.utils.toArray(".parallax-image-wrapper img");
+
+            items.forEach((item: any) => {
+                // Determine if this item already has a ScrollTrigger attached
+                if (!item.classList.contains("parallax-applied")) {
+                    item.classList.add("parallax-applied");
+
+                    gsap.fromTo(item,
+                        { yPercent: -10, scale: 1.1 },
+                        {
+                            yPercent: 10,
+                            scale: 1,
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: item.parentElement,
+                                start: "top bottom",
+                                end: "bottom top",
+                                scrub: true,
+                            }
+                        }
+                    );
+                }
+            });
+        });
+
+        return () => ctx.revert();
+    }, [posters]); // Re-run when new posters load
+
     return (
         <section className="gallery-section" id="gallery">
             <div className="gallery-header">
@@ -133,13 +168,15 @@ export default function InfiniteCanvas() {
                 {posters.map((poster) => (
                     <Link href={`/poster/${poster.id}`} key={poster.id}>
                         <div className="masonry-item">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src={poster.src}
-                                alt={poster.title}
-                                loading="lazy"
-                                style={{ aspectRatio: `400/${poster.height}` }}
-                            />
+                            <div className="parallax-image-wrapper" style={{ overflow: "hidden", width: "100%", height: "100%", position: "relative" }}>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                    src={poster.src}
+                                    alt={poster.title}
+                                    loading="lazy"
+                                    style={{ aspectRatio: `400/${poster.height}`, objectFit: "cover", width: "100%" }}
+                                />
+                            </div>
                             <div className="masonry-overlay">
                                 <h4>{poster.title}</h4>
                                 <span>{poster.category}</span>
