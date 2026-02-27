@@ -1700,3 +1700,129 @@ body::before {
     font-size: clamp(1.8rem, 8vw, 2.5rem) !important;
   }
 }
+/* -- Comic Style / Sliding Doors Elements -- */
+.comic-section {
+  position: relative;
+  min-height: 150vh; /* space for scrolling */
+  background: var(--bg-primary);
+  overflow: hidden;
+  padding-bottom: 5rem;
+}
+
+.halftone-bg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--text-muted) 2px, transparent 2.5px);
+  background-size: 20px 20px;
+  opacity: 0.15;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.comic-doors-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  padding: 0 2rem;
+}
+
+.comic-panel {
+  position: absolute;
+  width: 45%;
+  height: 70vh;
+  background: var(--bg-card);
+  border: 4px solid var(--accent-cyan);
+  border-radius: 12px;
+  overflow: hidden;
+  will-change: transform;
+  box-shadow: 12px 12px 0 var(--accent-magenta);
+  display: flex;
+  flex-direction: column;
+}
+
+.comic-panel-left {
+  left: 3%;
+  top: 15%;
+  border-color: var(--accent-cyan);
+  box-shadow: 12px 12px 0 rgba(0, 240, 255, 0.4);
+}
+
+.comic-panel-right {
+  right: 3%;
+  top: 20%;
+  border-color: var(--accent-magenta);
+  box-shadow: -12px 12px 0 rgba(255, 0, 60, 0.4);
+}
+
+.comic-panel-image {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid inherit;
+}
+
+.comic-panel-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.2) saturate(1.2); /* comic punch */
+}
+
+.comic-panel-caption {
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-top: 4px solid inherit;
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.comic-speech-bubble {
+  position: absolute;
+  background: #fff;
+  color: #000;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  border: 4px solid #000;
+  z-index: 10;
+  box-shadow: 6px 6px 0 var(--accent-cyan);
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.bubble-left {
+  top: -20px;
+  right: -20px;
+}
+
+.bubble-right {
+  bottom: -20px;
+  left: -20px;
+  box-shadow: -6px 6px 0 var(--accent-magenta);
+}
+
+@media (max-width: 768px) {
+  .comic-panel {
+    width: 90%;
+    height: 45vh;
+  }
+  .comic-panel-left {
+    top: 5%;
+    left: 5%;
+  }
+  .comic-panel-right {
+    top: 52%;
+    right: 5%;
+  }
+}

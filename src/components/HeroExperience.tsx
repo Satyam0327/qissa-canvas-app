@@ -10,6 +10,7 @@ export default function HeroExperience() {
     const heroRef = useRef<HTMLDivElement>(null);
     const scrollSectionRef = useRef<HTMLDivElement>(null);
     const bgRef = useRef<HTMLDivElement>(null);
+    const comicSectionRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         // We only want this on desktop/larger screens to avoid mobile jank, but Lenis handles it well.
@@ -140,6 +141,34 @@ export default function HeroExperience() {
                     }
                 });
             }
+
+            // 5. Comic Sliding Doors
+            if (comicSectionRef.current) {
+                // Pin the container while the doors slide in
+                ScrollTrigger.create({
+                    trigger: comicSectionRef.current,
+                    start: "top top",
+                    end: "+=150%",
+                    pin: true,
+                    pinSpacing: true,
+                });
+
+                const tlDoors = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: comicSectionRef.current,
+                        start: "top top",
+                        end: "+=150%",
+                        scrub: 1,
+                    }
+                });
+
+                // Slide panels in from opposite sides with slight rotations
+                tlDoors.fromTo(".panel-left", { xPercent: -150, rotation: -10 }, { xPercent: 0, rotation: 0, ease: "power2.out" }, 0)
+                    .fromTo(".panel-right", { xPercent: 150, rotation: 10 }, { xPercent: 0, rotation: 0, ease: "power2.out" }, 0)
+                    // Pop bubbles in right before the end of the scroll scrub
+                    .to(".bubble-left", { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2)" }, 0.6)
+                    .to(".bubble-right", { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2)" }, 0.7);
+            }
         });
 
         return () => ctx.revert();
@@ -182,18 +211,49 @@ export default function HeroExperience() {
                 </div>
             </section>
 
+            {/* ═══ COMIC SLIDING PANELS (Sliding Doors Effect) ═══ */}
+            <section className="comic-section" ref={comicSectionRef}>
+                <div className="halftone-bg" />
+                <div className="comic-doors-container">
+
+                    {/* Left Panel */}
+                    <div className="comic-panel comic-panel-left panel-left">
+                        <div className="comic-panel-image">
+                            <img src="/batman_1.png" alt="Batman in Gotham" />
+                            <div className="comic-speech-bubble bubble-left">BAM!</div>
+                        </div>
+                        <div className="comic-panel-caption">
+                            A Collision of Worlds
+                        </div>
+                    </div>
+
+                    {/* Right Panel */}
+                    <div className="comic-panel comic-panel-right panel-right">
+                        <div className="comic-panel-image">
+                            <img src="/batman_2.png" alt="Batman on Gargoyle" />
+                            <div className="comic-speech-bubble bubble-right">POW!</div>
+                        </div>
+                        <div className="comic-panel-caption">
+                            Art Breaks the Frame
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            {/* ═══ SCROLL-TELLING GALLERY PARALLAX ═══ */}
             <section className="scroll-section" id="story" ref={scrollSectionRef} style={{ paddingBottom: '10vh' }}>
 
                 {/* The text that stays pinned in the center */}
                 <div className="scroll-pin-wrapper" style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", width: "100%", zIndex: 10, pointerEvents: "none" }}>
-                    <div className="scroll-text-overlay" style={{ textAlign: "center" }}>
-                        <h2 className="scroll-text-line" style={{ position: "absolute", width: "100%", left: 0, top: "50%", transform: "translateY(-50%)" }}>
+                    <div className="scroll-text-overlay" style={{ display: "grid", placeItems: "center", width: "100%" }}>
+                        <h2 className="scroll-text-line" style={{ gridArea: "1 / 1" }}>
                             <span className="text-glow">Influence.</span>
                         </h2>
-                        <h2 className="scroll-text-line" style={{ position: "absolute", width: "100%", left: 0, top: "50%", transform: "translateY(-50%)" }}>
+                        <h2 className="scroll-text-line" style={{ gridArea: "1 / 1" }}>
                             <span className="text-glow" style={{ color: "var(--accent-magenta)" }}>Impact.</span>
                         </h2>
-                        <h2 className="scroll-text-line" style={{ position: "absolute", width: "100%", left: 0, top: "50%", transform: "translateY(-50%)" }}>
+                        <h2 className="scroll-text-line" style={{ gridArea: "1 / 1" }}>
                             <span className="gradient-text">Lasting Legacy.</span>
                         </h2>
                     </div>
