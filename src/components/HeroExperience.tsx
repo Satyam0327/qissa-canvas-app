@@ -160,7 +160,7 @@ export default function HeroExperience() {
 
                 <div className="hero-content" style={{ zIndex: 10 }}>
                     <p className="hero-tag">✦ Where Art Meets Narrative</p>
-                    <h1 className="hero-title" style={{ fontSize: 'clamp(3.5rem, 8vw, 7rem)', lineHeight: 1 }}>
+                    <h1 className="hero-title">
                         <span className="line" style={{ display: 'block' }}>Every Canvas</span>
                         <span className="line" style={{ display: 'block' }}>
                             Holds a <span className="gradient-text">Qissa</span>
@@ -187,13 +187,13 @@ export default function HeroExperience() {
                 {/* The text that stays pinned in the center */}
                 <div className="scroll-pin-wrapper" style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", width: "100%", zIndex: 10, pointerEvents: "none" }}>
                     <div className="scroll-text-overlay" style={{ textAlign: "center" }}>
-                        <h2 className="scroll-text-line" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", position: "absolute", width: "100%", left: 0, top: "50%", transform: "translateY(-50%)" }}>
+                        <h2 className="scroll-text-line" style={{ position: "absolute", width: "100%", left: 0, top: "50%", transform: "translateY(-50%)" }}>
                             <span className="text-glow">Influence.</span>
                         </h2>
-                        <h2 className="scroll-text-line" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", position: "absolute", width: "100%", left: 0, top: "50%", transform: "translateY(-50%)" }}>
+                        <h2 className="scroll-text-line" style={{ position: "absolute", width: "100%", left: 0, top: "50%", transform: "translateY(-50%)" }}>
                             <span className="text-glow" style={{ color: "var(--accent-magenta)" }}>Impact.</span>
                         </h2>
-                        <h2 className="scroll-text-line" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", position: "absolute", width: "100%", left: 0, top: "50%", transform: "translateY(-50%)" }}>
+                        <h2 className="scroll-text-line" style={{ position: "absolute", width: "100%", left: 0, top: "50%", transform: "translateY(-50%)" }}>
                             <span className="gradient-text">Lasting Legacy.</span>
                         </h2>
                     </div>
